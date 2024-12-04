@@ -55,7 +55,7 @@ class ProductDetailViewModel @Inject constructor(
                     }
 
                     _cartProductsState.value =
-                        CartProductsState(result.data!!, false, null)
+                        CartProductsState(result.data, false, null)
                 }
             }
         }

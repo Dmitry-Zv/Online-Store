@@ -15,15 +15,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
-import com.vc.onlinestore.R
 import com.vc.onlinestore.data.firebase.dto.User
 import com.vc.onlinestore.databinding.FragmentUserAccountBinding
 import com.vc.onlinestore.dialog.setupBottomSheetDialog
 import com.vc.onlinestore.utils.collectLatestLifecycleFlow
 import com.vc.onlinestore.utils.hideBottomNavigation
-import com.vc.onlinestore.utils.showBottomNavigation
 import dagger.hilt.android.AndroidEntryPoint
-import de.hdodenhof.circleimageview.CircleImageView
 
 @AndroidEntryPoint
 class UserAccountFragment : Fragment() {

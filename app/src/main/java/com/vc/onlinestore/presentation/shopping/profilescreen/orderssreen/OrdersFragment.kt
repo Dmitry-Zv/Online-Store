@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.vc.onlinestore.R
 import com.vc.onlinestore.adapters.OrdersAdapter
 import com.vc.onlinestore.databinding.FragmentOrdersBinding
 import com.vc.onlinestore.utils.collectLatestLifecycleFlow

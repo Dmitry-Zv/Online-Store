@@ -1,7 +1,6 @@
 package com.vc.onlinestore.domain.repository
 
 import android.graphics.Bitmap
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
 import com.vc.onlinestore.data.firebase.dto.Address
 import com.vc.onlinestore.data.firebase.dto.User

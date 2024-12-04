@@ -12,7 +12,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.vc.onlinestore.R
 import com.vc.onlinestore.databinding.ActivityShoppingBinding
-import com.vc.onlinestore.presentation.shopping.cartscreen.CartViewModel
 import com.vc.onlinestore.utils.collectLatestLifecycleFlow
 import dagger.hilt.android.AndroidEntryPoint
 
