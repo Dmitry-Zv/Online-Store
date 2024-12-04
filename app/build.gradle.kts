@@ -65,6 +65,7 @@ dependencies {
 
     //Glide
     implementation(libs.glide)
+    kapt (libs.compiler)
 
     //circular image
     implementation(libs.circleimageview)
@@ -84,6 +85,7 @@ dependencies {
 
     //Firebase
     implementation(libs.firebase.auth)
+    implementation(libs.play.services.auth)
 
     //Coroutines with firebase
     implementation(libs.kotlinx.coroutines.play.services)

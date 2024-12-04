@@ -1,5 +1,6 @@
 package com.vc.onlinestore.presentation.shopping.profilescreen.useraccountscreen
 
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -8,6 +9,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -30,8 +32,16 @@ class UserAccountFragment : Fragment() {
     private val viewModel: UserAccountViewModel by viewModels()
     private val imageActivityResultLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
-            imageUri = activityResult.data?.data
-            Glide.with(this).load(imageUri).into(binding.imageUser)
+            if (activityResult.resultCode == RESULT_OK && activityResult.data != null) {
+                imageUri = activityResult.data?.data
+                Glide.with(requireContext()).load(imageUri).
+                override(300,300).into(binding.imageUser)
+                Toast.makeText(requireContext(), "Success loading image", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "Error with loading image", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
         }
 
     private var imageUri: Uri? = null
@@ -75,9 +85,14 @@ class UserAccountFragment : Fragment() {
             }
         }
         binding.imageUser.setOnClickListener {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
-            imageActivityResultLauncher.launch(intent)
+            imageActivityResultLauncher.launch(
+                Intent.createChooser(
+                    intent,
+                    "Select image from here..."
+                )
+            )
         }
     }
 

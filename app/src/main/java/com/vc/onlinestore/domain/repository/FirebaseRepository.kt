@@ -16,7 +16,9 @@ interface FirebaseRepository {
 
     suspend fun login(email: String, password: String): Resource<FirebaseUser>
 
-    suspend fun logout():Resource<Unit>
+    suspend fun signInWithGoogle(token: String): Resource<FirebaseUser>
+
+    suspend fun logout(): Resource<Unit>
 
     suspend fun resetPassword(email: String): Resource<String>
 
@@ -24,7 +26,11 @@ interface FirebaseRepository {
 
     suspend fun getUserInfo(): Resource<User>
 
-    suspend fun updateUserInfo(user:User, shouldRetrieveOldImage: Boolean, image:Bitmap?):Resource<User>
+    suspend fun updateUserInfo(
+        user: User,
+        shouldRetrieveOldImage: Boolean,
+        image: Bitmap?
+    ): Resource<User>
 
     suspend fun saveAddress(address: Address): Resource<Unit>
 
@@ -34,5 +40,5 @@ interface FirebaseRepository {
 
     suspend fun placeOrder(order: Order): Resource<Order>
 
-    suspend fun getAllOrdersByUser():Resource<List<Order>>
+    suspend fun getAllOrdersByUser(): Resource<List<Order>>
 }
