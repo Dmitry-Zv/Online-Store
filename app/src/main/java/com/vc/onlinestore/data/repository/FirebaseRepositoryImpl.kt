@@ -3,6 +3,7 @@ package com.vc.onlinestore.data.repository
 import android.graphics.Bitmap
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.StorageReference
 import com.vc.onlinestore.data.firebase.dto.Address
@@ -32,7 +33,6 @@ class FirebaseRepositoryImpl @Inject constructor(
         user: User,
         password: String
     ): Resource<FirebaseUser> = withContext(Dispatchers.IO) {
-        delay(3000L)
         try {
             val authResult =
                 firebaseAuth.createUserWithEmailAndPassword(user.email, password).await()
@@ -48,6 +48,18 @@ class FirebaseRepositoryImpl @Inject constructor(
             try {
                 val authResult = firebaseAuth.signInWithEmailAndPassword(email, password).await()
                 Resource.Success(data = checkNotNull(authResult.user))
+            } catch (e: Exception) {
+                Resource.Error(message = e.message ?: "Unknown message")
+            }
+        }
+
+    override suspend fun signInWithGoogle(token: String): Resource<FirebaseUser> =
+        withContext(Dispatchers.IO) {
+            try {
+                val credential = GoogleAuthProvider.getCredential(token, null)
+                val authResult = firebaseAuth.signInWithCredential(credential).await()
+                val firebaseUser = checkNotNull(checkNotNull(authResult).user)
+                Resource.Success(data = firebaseUser)
             } catch (e: Exception) {
                 Resource.Error(message = e.message ?: "Unknown message")
             }
