@@ -28,24 +28,19 @@ class MainCategoryViewModel @Inject constructor(
     private val _bestProductsState = MutableStateFlow(ProductsCategoryState())
     val bestProductsState = _bestProductsState.asStateFlow()
 
-    init {
-        fetchSpecialProducts()
-        fetchBestDealsProducts()
-        fetchBestProducts()
-    }
-
     override fun onEvent(event: MainCategoryEvent) {
         when (event) {
             MainCategoryEvent.GetAllProducts -> fetchSpecialProducts()
         }
     }
 
-    private fun fetchSpecialProducts() {
+    fun fetchSpecialProducts() {
         viewModelScope.launch {
             _specialProductsState.value = ProductsCategoryState(null, true, null)
             when (val result = getSpecialProducts()) {
                 is Resource.Error -> {
-                    _specialProductsState.value = ProductsCategoryState(null, false, result.message!!)
+                    _specialProductsState.value =
+                        ProductsCategoryState(null, false, result.message!!)
                 }
 
                 is Resource.Success -> {
@@ -57,23 +52,25 @@ class MainCategoryViewModel @Inject constructor(
 
     }
 
-    private fun fetchBestDealsProducts() {
+    fun fetchBestDealsProducts() {
         viewModelScope.launch {
             _bestDealsProductsState.value = ProductsCategoryState(null, true, null)
             when (val result = getBestDealsProducts()) {
                 is Resource.Error -> {
-                    _bestDealsProductsState.value = ProductsCategoryState(null, false, result.message!!)
+                    _bestDealsProductsState.value =
+                        ProductsCategoryState(null, false, result.message!!)
                 }
 
                 is Resource.Success -> {
-                    _bestDealsProductsState.value = ProductsCategoryState(result.data!!, false, null)
+                    _bestDealsProductsState.value =
+                        ProductsCategoryState(result.data!!, false, null)
                 }
             }
             _bestDealsProductsState.value = ProductsCategoryState()
         }
     }
 
-    private fun fetchBestProducts() {
+    fun fetchBestProducts() {
         viewModelScope.launch {
             _bestProductsState.value = ProductsCategoryState(null, true, null)
             when (val result = getBestProducts()) {

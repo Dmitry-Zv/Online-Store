@@ -1,6 +1,7 @@
 package com.vc.onlinestore.data.repository
 
 import android.graphics.Bitmap
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -16,7 +17,6 @@ import com.vc.onlinestore.utils.Constants.PROFILE_IMAGES
 import com.vc.onlinestore.utils.Constants.USER_COLLECTION
 import com.vc.onlinestore.utils.Resource
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
@@ -229,6 +229,7 @@ class FirebaseRepositoryImpl @Inject constructor(
                 val orders = snapShotDocument.toObjects(Order::class.java)
                 Resource.Success(orders)
             } catch (e: Exception) {
+                Log.e("ORDERS", e.message.toString(), e)
                 Resource.Error(message = e.message ?: "Unknown message")
             }
         }

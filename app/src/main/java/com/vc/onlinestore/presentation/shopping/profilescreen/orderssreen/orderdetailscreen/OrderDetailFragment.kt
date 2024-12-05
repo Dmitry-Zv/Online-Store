@@ -73,9 +73,7 @@ class OrderDetailFragment : Fragment() {
                     OrderStatus.Ordered.status,
                     OrderStatus.Confirmed.status,
                     OrderStatus.Shipped.status,
-                    OrderStatus.Delivered.status,
-                    OrderStatus.Ordered.status,
-                    OrderStatus.Ordered.status,
+                    OrderStatus.Delivered.status
                 )
             )
 
@@ -94,12 +92,12 @@ class OrderDetailFragment : Fragment() {
             tvFullName.text = order.address.fullName
             tvAddress.text = "${order.address.street} ${order.address.city}"
             tvPhoneNumber.text = order.address.phone
-            tvTotalPrice.text = "$ ${order.totalPrice}"
+            tvTotalPrice.text = "BYN ${String.format("%.2f", order.totalPrice)}"
             billingProductsAdapter.setBillingProducts(order.products)
         }
     }
 
-    private fun navigateBack(){
+    private fun navigateBack() {
         binding.toolbarOrderDetails.setOnClickListener {
             findNavController().navigateUp()
         }

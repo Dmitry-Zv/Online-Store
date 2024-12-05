@@ -100,7 +100,7 @@ class ProductDetailsFragment : Fragment() {
     private fun setupDetailView() {
         binding.apply {
             tvProductName.text = product.name
-            tvProductPrice.text = "$ ${product.price}"
+            tvProductPrice.text = "BYN ${product.price}"
             tvProductDescription.text = product.description
             imageClose.setOnClickListener {
                 findNavController().navigateUp()

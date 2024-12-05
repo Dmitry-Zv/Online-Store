@@ -80,7 +80,7 @@ class BillingFragment : Fragment() {
         order()
         collectAddresses()
         collectOrderState()
-        binding.tvTotalPrice.text = "$ ${String.format("%.2f", totalPrice)}"
+        binding.tvTotalPrice.text = "BYN ${String.format("%.2f", totalPrice)}"
     }
 
     override fun onDestroyView() {

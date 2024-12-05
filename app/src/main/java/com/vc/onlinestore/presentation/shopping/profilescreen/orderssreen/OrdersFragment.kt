@@ -44,6 +44,11 @@ class OrdersFragment : Fragment() {
         collectAllOrders()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllOrders()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -61,7 +66,7 @@ class OrdersFragment : Fragment() {
         }
     }
 
-    private fun navigateBack(){
+    private fun navigateBack() {
         binding.toolbarAllOrders.setOnClickListener {
             findNavController().navigateUp()
         }

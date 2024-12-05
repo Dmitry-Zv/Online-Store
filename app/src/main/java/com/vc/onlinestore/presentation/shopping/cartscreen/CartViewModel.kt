@@ -68,7 +68,7 @@ class CartViewModel @Inject constructor(
         }
     }
 
-    private fun getCartProducts() {
+    fun getCartProducts() {
         viewModelScope.launch {
             _cartProductsState.value = CartProductsState(null, true, null)
             when (val result = getAllCartProducts()) {

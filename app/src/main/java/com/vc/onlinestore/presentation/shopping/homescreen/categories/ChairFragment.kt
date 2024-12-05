@@ -36,6 +36,12 @@ class ChairFragment : BaseCategoryFragment() {
         collectBestProductsByCategory()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchOfferProducts()
+        viewModel.fetchBestProducts()
+    }
+
     private fun collectOfferProductsByCategory() {
         collectLatestLifecycleFlow(viewModel.offerProductsState) { state ->
             when {

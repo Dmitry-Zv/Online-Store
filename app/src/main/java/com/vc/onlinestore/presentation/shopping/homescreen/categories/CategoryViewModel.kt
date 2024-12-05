@@ -23,12 +23,7 @@ class CategoryViewModel (
     private val _bestProductsState = MutableStateFlow(ProductsCategoryState())
     val bestProductsState = _bestProductsState.asStateFlow()
 
-    init {
-        fetchOfferProducts()
-        fetchBestProducts()
-    }
-
-    private fun fetchOfferProducts() {
+    fun fetchOfferProducts() {
         viewModelScope.launch {
             _offerProductsState.value = ProductsCategoryState(null, true, null)
             when (val result = getOfferProductsByCategory(category.category)) {
@@ -44,7 +39,7 @@ class CategoryViewModel (
         }
     }
 
-    private fun fetchBestProducts() {
+    fun fetchBestProducts() {
         viewModelScope.launch {
             _bestProductsState.value = ProductsCategoryState(null, true, null)
             when (val result = getBestProductsByCategory(category.category)) {

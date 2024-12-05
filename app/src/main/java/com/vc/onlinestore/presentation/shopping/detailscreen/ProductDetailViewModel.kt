@@ -53,10 +53,22 @@ class ProductDetailViewModel @Inject constructor(
                             insertCartProduct(cartProduct)
                         }
                     }
-
-                    _cartProductsState.value =
-                        CartProductsState(result.data, false, null)
+                    getCartProducts()
                 }
+            }
+        }
+    }
+
+    private suspend fun getCartProducts() {
+        when (val result = getAllCartProducts()) {
+            is Resource.Error -> {
+                _cartProductsState.value =
+                    CartProductsState(null, false, result.message!!)
+            }
+
+            is Resource.Success -> {
+                _cartProductsState.value =
+                    CartProductsState(result.data, false, null)
             }
         }
     }

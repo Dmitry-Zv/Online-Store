@@ -18,11 +18,8 @@ class OrdersViewModel @Inject constructor(
     private val _ordersState = MutableStateFlow(OrdersState())
     val ordersState = _ordersState.asStateFlow()
 
-    init {
-        getAllOrders()
-    }
 
-    private fun getAllOrders() {
+    fun getAllOrders() {
         viewModelScope.launch {
             _ordersState.value = OrdersState(null, true, null)
             when (val result = getAllOrdersByUser()) {

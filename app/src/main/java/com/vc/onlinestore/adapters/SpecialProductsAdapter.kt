@@ -1,11 +1,15 @@
 package com.vc.onlinestore.adapters
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.vc.onlinestore.databinding.SpecialRvItemBinding
 import com.vc.onlinestore.domain.model.Product
 
@@ -18,7 +22,11 @@ class SpecialProductsAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product) {
             binding.apply {
-                Glide.with(itemView).load(product.images[0]).into(imgSpecialRvItem)
+                val firstImage = product.images.takeIf { it.isNotEmpty() }?.get(0)
+                Glide.with(itemView).setDefaultRequestOptions(
+                    RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .timeout(10000) // Set timeout to 10 seconds
+                ).load(firstImage).error(ColorDrawable(Color.GRAY)).into(imgSpecialRvItem)
                 tvSpecialProductName.text = product.name
                 tvSpecialProductPrice.text = product.price.toString()
             }

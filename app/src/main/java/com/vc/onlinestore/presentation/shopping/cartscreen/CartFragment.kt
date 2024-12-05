@@ -46,6 +46,7 @@ class CartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupCartRv()
         navigate()
+        navigateUpListener()
         changeCartProduct()
         collectCartProductsState()
         collectPrice()
@@ -92,6 +93,14 @@ class CartFragment : Fragment() {
                     "Cart is empty. Fill cart with some products",
                     Snackbar.LENGTH_SHORT
                 ).show()
+            }
+        }
+    }
+
+    private fun navigateUpListener() {
+        findNavController().addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.cartFragment) {
+                viewModel.getCartProducts()
             }
         }
     }
@@ -143,7 +152,7 @@ class CartFragment : Fragment() {
         collectLatestLifecycleFlow(viewModel.productPrice) { productPrice ->
             productPrice?.let {
                 totalPrice = productPrice
-                binding.tvTotalPrice.text = "$ $productPrice"
+                binding.tvTotalPrice.text = "BYN ${String.format("%.2f", totalPrice)}"
             }
         }
     }

@@ -17,6 +17,14 @@ data class CartProduct(
     val selectedColor: Int? = null,
     val selectedSize: String? = null
 ) : Parcelable {
+    constructor() : this(
+        0,
+        Product(),
+        0,
+        null,
+        null
+    )
+
     companion object {
         fun findQuantitiesForCartProduct(
             cartProducts: List<CartProduct>,

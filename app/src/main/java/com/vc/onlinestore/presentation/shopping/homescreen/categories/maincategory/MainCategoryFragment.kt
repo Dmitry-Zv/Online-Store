@@ -53,6 +53,9 @@ class MainCategoryFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         showBottomNavigation()
+        viewModel.fetchSpecialProducts()
+        viewModel.fetchBestDealsProducts()
+        viewModel.fetchBestProducts()
     }
 
     override fun onDestroyView() {
