@@ -12,9 +12,8 @@ import com.vc.onlinestore.utils.collectLatestLifecycleFlow
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
-class FurnitureFragment : BaseCategoryFragment() {
+class InstrumentFragment:BaseCategoryFragment() {
     @Inject
     lateinit var getOfferProductsByCategory: GetOfferProductsByCategory
 
@@ -25,7 +24,7 @@ class FurnitureFragment : BaseCategoryFragment() {
         BaseCategoryViewModelFactory(
             getOfferProductsByCategory,
             getBestProductsByCategory,
-            Category.Furniture
+            Category.Instrument
         )
     }
 
