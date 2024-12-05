@@ -11,7 +11,8 @@ import com.vc.onlinestore.databinding.FragmentHomeBinding
 import com.vc.onlinestore.presentation.shopping.homescreen.categories.AccessoryFragment
 import com.vc.onlinestore.presentation.shopping.homescreen.categories.ChairFragment
 import com.vc.onlinestore.presentation.shopping.homescreen.categories.CupboardFragment
-import com.vc.onlinestore.presentation.shopping.homescreen.categories.FurnitureFragment
+import com.vc.onlinestore.presentation.shopping.homescreen.categories.InstrumentFragment
+import com.vc.onlinestore.presentation.shopping.homescreen.categories.MaterialFragment
 import com.vc.onlinestore.presentation.shopping.homescreen.categories.maincategory.MainCategoryFragment
 import com.vc.onlinestore.presentation.shopping.homescreen.categories.TableFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,7 +51,8 @@ class HomeFragment : Fragment() {
             CupboardFragment(),
             TableFragment(),
             AccessoryFragment(),
-            FurnitureFragment()
+            InstrumentFragment(),
+            MaterialFragment()
         )
         binding.viewpagerHome.isUserInputEnabled = false
         val viewPager2Adapter =
@@ -63,7 +65,8 @@ class HomeFragment : Fragment() {
                 2 -> tab.text = "Cupboard"
                 3 -> tab.text = "Table"
                 4 -> tab.text = "Accessory"
-                5 -> tab.text = "Furniture"
+                5 -> tab.text = "Instrument"
+                6 -> tab.text = "Material"
             }
         }.attach()
     }
