@@ -12,7 +12,20 @@
           "package_name": "com.vc.onlinestore"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "678025650961-mjrgdh3bopitbul470itg6phs3clgcu1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vc.onlinestore",
+            "certificate_hash": "fac5ddfd0cc9da4060dc75e346daa01b2a456c68"
+          }
+        },
+        {
+          "client_id": "678025650961-c7sjriqb1su0er1sfracvc48n29oeudj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBESGeS3y22ccDuqi6DpVZEw4SMn_Rb1Mo"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "678025650961-c7sjriqb1su0er1sfracvc48n29oeudj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

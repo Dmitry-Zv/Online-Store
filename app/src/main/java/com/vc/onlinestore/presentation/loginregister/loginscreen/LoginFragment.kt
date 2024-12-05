@@ -2,6 +2,7 @@ package com.vc.onlinestore.presentation.loginregister.loginscreen
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,10 +35,16 @@ class LoginFragment : Fragment() {
     private val launcher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
-        val account = GoogleSignIn.getSignedInAccountFromIntent(it.data).result
-        account.idToken?.let { token ->
-            viewModel.onEvent(event = LoginEvent.SignInWithGoogle(token = token))
-        } ?: Toast.makeText(requireContext(), "IdToken is null", Toast.LENGTH_SHORT).show()
+        try {
+            val account = GoogleSignIn.getSignedInAccountFromIntent(it.data).result
+            account.idToken?.let { token ->
+                viewModel.onEvent(event = LoginEvent.SignInWithGoogle(token = token))
+            } ?: Toast.makeText(requireContext(), "IdToken is null", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Log.e("GOOGLE_TAG", e.message.toString(), e)
+            Toast.makeText(requireContext(), "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     override fun onCreateView(

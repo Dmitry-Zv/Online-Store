@@ -24,6 +24,7 @@ import com.vc.onlinestore.utils.collectLatestLifecycleFlow
 import com.vc.onlinestore.utils.hideBottomNavigation
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class UserAccountFragment : Fragment() {
     private var _binding: FragmentUserAccountBinding? = null
@@ -34,8 +35,8 @@ class UserAccountFragment : Fragment() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == RESULT_OK && activityResult.data != null) {
                 imageUri = activityResult.data?.data
-                Glide.with(requireContext()).load(imageUri).
-                override(300,300).into(binding.imageUser)
+                Glide.with(requireActivity()).load(imageUri).override(300, 300)
+                    .into(binding.imageUser)
                 Toast.makeText(requireContext(), "Success loading image", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(requireContext(), "Error with loading image", Toast.LENGTH_SHORT)
