@@ -1,6 +1,7 @@
 package com.vc.onlinestore.di
 
 import com.vc.onlinestore.data.network.ProductApi
+import com.vc.onlinestore.utils.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,7 +37,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit =
         Retrofit.Builder()
-            .baseUrl("http://121.0.0.1:8080/api/v1/")
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
