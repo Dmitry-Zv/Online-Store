@@ -13,6 +13,8 @@ import com.vc.onlinestore.R
 import com.vc.onlinestore.adapters.BestProductAdapter
 import com.vc.onlinestore.databinding.FragmentBaseCategoryBinding
 import com.vc.onlinestore.domain.model.Product
+import com.vc.onlinestore.helper.HorizontalItemDecoration
+import com.vc.onlinestore.helper.VerticalItemDecoration
 import com.vc.onlinestore.utils.showBottomNavigation
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -58,6 +60,7 @@ open class BaseCategoryFragment : Fragment() {
             rvOffer.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             rvOffer.adapter = offerAdapter
+            rvOffer.addItemDecoration(HorizontalItemDecoration())
         }
     }
 
@@ -66,6 +69,7 @@ open class BaseCategoryFragment : Fragment() {
             rvBestProducts.layoutManager =
                 GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
             rvBestProducts.adapter = bestProductsAdapter
+            rvBestProducts.addItemDecoration(VerticalItemDecoration())
         }
     }
 

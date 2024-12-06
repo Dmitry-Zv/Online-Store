@@ -10,6 +10,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.vc.onlinestore.R
 import com.vc.onlinestore.databinding.ActivityShoppingBinding
 import com.vc.onlinestore.utils.collectLatestLifecycleFlow
@@ -36,6 +37,7 @@ class ShoppingActivity : AppCompatActivity() {
         val navController = findNavController(R.id.shoppingHostFragment)
         binding.bottomNavigation.setupWithNavController(navController)
         collectCartProductSate()
+        collectErrorState()
     }
 
 
@@ -51,6 +53,14 @@ class ShoppingActivity : AppCompatActivity() {
             bottomNavigation.getOrCreateBadge(R.id.cartFragment).apply {
                 number = count
                 backgroundColor = ContextCompat.getColor(this@ShoppingActivity, R.color.g_blue)
+            }
+        }
+    }
+
+    private fun collectErrorState() {
+        collectLatestLifecycleFlow(viewModel.errorState) { errorState ->
+            if (errorState.isNotBlank()) {
+                Snackbar.make(binding.root, "Error: $errorState", Snackbar.LENGTH_SHORT).show()
             }
         }
     }

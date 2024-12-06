@@ -104,4 +104,9 @@ dependencies {
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.paging)
     implementation(libs.androidx.room.ktx)
+
+    //SwipeRefreshLayout
+    val swipeRefreshLayout = "1.1.0"
+    implementation (libs.androidx.swiperefreshlayout.v110)
+
 }

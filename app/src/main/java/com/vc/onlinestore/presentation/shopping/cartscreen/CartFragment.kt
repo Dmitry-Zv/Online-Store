@@ -100,7 +100,7 @@ class CartFragment : Fragment() {
     private fun navigateUpListener() {
         findNavController().addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.cartFragment) {
-                viewModel.getCartProducts()
+                viewModel.onEvent(event = CartEvent.GetCartProducts)
             }
         }
     }

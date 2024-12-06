@@ -159,6 +159,7 @@ class ProductDetailsFragment : Fragment() {
                             R.color.black
                         )
                     )
+                    binding.buttonAddToCart.isEnabled = false
                     Snackbar.make(binding.root, "Successfully added", Snackbar.LENGTH_SHORT).show()
                 }
 

@@ -29,9 +29,23 @@ data class CartProduct(
         fun findQuantitiesForCartProduct(
             cartProducts: List<CartProduct>,
             cartProductToCheck: CartProduct
-        ): Int? =
-            cartProducts.find { cartProduct ->
-                cartProduct.copy(quantity = 0) == cartProductToCheck.copy(quantity = 0)
-            }?.quantity
+        ): CartProduct? {
+            cartProducts.forEach { cartProduct ->
+                if (cartProduct.copy(cartProductId = 0, quantity = 0) == cartProductToCheck.copy(
+                        cartProductId = 0,
+                        quantity = 0
+                    )
+                ) {
+                    return cartProduct
+                }
+            }
+            return null
+        }
+
     }
 }
+
+data class FindQuantityAndCartProduct(
+    val quantity: Int,
+    val cartProduct: CartProduct
+)

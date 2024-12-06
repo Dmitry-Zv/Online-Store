@@ -5,17 +5,18 @@ import androidx.lifecycle.viewModelScope
 import com.vc.onlinestore.domain.model.Category
 import com.vc.onlinestore.domain.usecases.network.GetBestProductsByCategory
 import com.vc.onlinestore.domain.usecases.network.GetOfferProductsByCategory
+import com.vc.onlinestore.presentation.common.Event
 import com.vc.onlinestore.utils.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 
-class CategoryViewModel (
+class CategoryViewModel(
     private val getOfferProductsByCategory: GetOfferProductsByCategory,
     private val getBestProductsByCategory: GetBestProductsByCategory,
     private val category: Category
-) : ViewModel() {
+) : ViewModel(), Event<CategoryEvent> {
 
     private val _offerProductsState = MutableStateFlow(ProductsCategoryState())
     val offerProductsState = _offerProductsState.asStateFlow()
@@ -23,7 +24,19 @@ class CategoryViewModel (
     private val _bestProductsState = MutableStateFlow(ProductsCategoryState())
     val bestProductsState = _bestProductsState.asStateFlow()
 
-    fun fetchOfferProducts() {
+    init {
+        fetchOfferProducts()
+        fetchBestProducts()
+    }
+
+    override fun onEvent(event: CategoryEvent) {
+        when (event) {
+            CategoryEvent.BestProducts -> fetchBestProducts()
+            CategoryEvent.OfferProducts -> fetchOfferProducts()
+        }
+    }
+
+    private fun fetchOfferProducts() {
         viewModelScope.launch {
             _offerProductsState.value = ProductsCategoryState(null, true, null)
             when (val result = getOfferProductsByCategory(category.category)) {
@@ -35,11 +48,10 @@ class CategoryViewModel (
                     _offerProductsState.value = ProductsCategoryState(result.data!!, false, null)
                 }
             }
-            _offerProductsState.value = ProductsCategoryState()
         }
     }
 
-    fun fetchBestProducts() {
+    private fun fetchBestProducts() {
         viewModelScope.launch {
             _bestProductsState.value = ProductsCategoryState(null, true, null)
             when (val result = getBestProductsByCategory(category.category)) {
@@ -53,7 +65,6 @@ class CategoryViewModel (
                     )
                 }
             }
-            _bestProductsState.value = ProductsCategoryState()
         }
     }
 }
