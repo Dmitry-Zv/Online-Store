@@ -28,13 +28,21 @@ class MainCategoryViewModel @Inject constructor(
     private val _bestProductsState = MutableStateFlow(ProductsCategoryState())
     val bestProductsState = _bestProductsState.asStateFlow()
 
+    init {
+        fetchSpecialProducts()
+        fetchBestDealsProducts()
+        fetchBestProducts()
+    }
+
     override fun onEvent(event: MainCategoryEvent) {
         when (event) {
-            MainCategoryEvent.GetAllProducts -> fetchSpecialProducts()
+            MainCategoryEvent.BestDealsProducts -> fetchBestDealsProducts()
+            MainCategoryEvent.BestProducts -> fetchBestProducts()
+            MainCategoryEvent.SpecialProducts -> fetchSpecialProducts()
         }
     }
 
-    fun fetchSpecialProducts() {
+    private fun fetchSpecialProducts() {
         viewModelScope.launch {
             _specialProductsState.value = ProductsCategoryState(null, true, null)
             when (val result = getSpecialProducts()) {
@@ -47,12 +55,11 @@ class MainCategoryViewModel @Inject constructor(
                     _specialProductsState.value = ProductsCategoryState(result.data, false, null)
                 }
             }
-            _specialProductsState.value = ProductsCategoryState()
         }
 
     }
 
-    fun fetchBestDealsProducts() {
+    private fun fetchBestDealsProducts() {
         viewModelScope.launch {
             _bestDealsProductsState.value = ProductsCategoryState(null, true, null)
             when (val result = getBestDealsProducts()) {
@@ -66,11 +73,10 @@ class MainCategoryViewModel @Inject constructor(
                         ProductsCategoryState(result.data!!, false, null)
                 }
             }
-            _bestDealsProductsState.value = ProductsCategoryState()
         }
     }
 
-    fun fetchBestProducts() {
+    private fun fetchBestProducts() {
         viewModelScope.launch {
             _bestProductsState.value = ProductsCategoryState(null, true, null)
             when (val result = getBestProducts()) {
@@ -82,7 +88,6 @@ class MainCategoryViewModel @Inject constructor(
                     _bestProductsState.value = ProductsCategoryState(result.data, false, null)
                 }
             }
-            _bestProductsState.value = ProductsCategoryState()
         }
     }
 

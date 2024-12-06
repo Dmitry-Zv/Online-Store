@@ -43,12 +43,12 @@ class ProductDetailViewModel @Inject constructor(
                     if (result.data?.isEmpty() == true) {
                         insertCartProduct(cartProduct)
                     } else {
-                        val quantity = CartProduct.findQuantitiesForCartProduct(
+                        val findCardProduct = CartProduct.findQuantitiesForCartProduct(
                             result.data!!,
                             cartProduct
                         )
-                        if (quantity != null) {
-                            insertCartProduct(cartProduct.copy(quantity = quantity + 1))
+                        if (findCardProduct != null) {
+                            insertCartProduct(findCardProduct.copy(quantity = findCardProduct.quantity + 1))
                         } else {
                             insertCartProduct(cartProduct)
                         }

@@ -31,15 +31,8 @@ class CupboardFragment : BaseCategoryFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         collectOfferProductsByCategory()
         collectBestProductsByCategory()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.fetchOfferProducts()
-        viewModel.fetchBestProducts()
     }
 
     private fun collectOfferProductsByCategory() {

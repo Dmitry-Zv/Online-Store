@@ -6,4 +6,5 @@ sealed class CartEvent {
     data class IncreaseQuantity(val cartProduct: CartProduct) : CartEvent()
     data class DecreaseQuantity(val cartProduct: CartProduct) : CartEvent()
     data class DeleteCartProduct(val cartProduct: CartProduct) : CartEvent()
+    data object GetCartProducts: CartEvent()
 }

@@ -15,6 +15,7 @@ import com.vc.onlinestore.adapters.BestDealAdapter
 import com.vc.onlinestore.adapters.BestProductAdapter
 import com.vc.onlinestore.adapters.SpecialProductsAdapter
 import com.vc.onlinestore.databinding.FragmentMainCategoryBinding
+import com.vc.onlinestore.helper.VerticalItemDecoration
 import com.vc.onlinestore.utils.collectLatestLifecycleFlow
 import com.vc.onlinestore.utils.showBottomNavigation
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,7 +41,6 @@ class MainCategoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setUpSpecialProductsRv()
         setUpBestDealAdapter()
         setUpBestProductAdapter()
@@ -53,9 +53,6 @@ class MainCategoryFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         showBottomNavigation()
-        viewModel.fetchSpecialProducts()
-        viewModel.fetchBestDealsProducts()
-        viewModel.fetchBestProducts()
     }
 
     override fun onDestroyView() {
@@ -87,6 +84,7 @@ class MainCategoryFragment : Fragment() {
             rvBestProducts.layoutManager =
                 GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
             rvBestProducts.adapter = bestProductAdapter
+            rvBestProducts.addItemDecoration(VerticalItemDecoration())
         }
     }
 

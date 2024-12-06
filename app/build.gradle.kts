@@ -104,4 +104,8 @@ dependencies {
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.paging)
     implementation(libs.androidx.room.ktx)
+
+    //SwipeRefreshLayout
+    implementation (libs.androidx.swiperefreshlayout.v110)
+
 }

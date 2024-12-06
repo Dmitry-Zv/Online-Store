@@ -65,10 +65,11 @@ class CartViewModel @Inject constructor(
             )
 
             is CartEvent.DeleteCartProduct -> deleteProduct(cartProduct = event.cartProduct)
+            CartEvent.GetCartProducts -> getCartProducts()
         }
     }
 
-    fun getCartProducts() {
+    private fun getCartProducts() {
         viewModelScope.launch {
             _cartProductsState.value = CartProductsState(null, true, null)
             when (val result = getAllCartProducts()) {

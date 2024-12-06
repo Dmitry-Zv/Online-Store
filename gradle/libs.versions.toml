@@ -22,6 +22,8 @@ retrofit2KotlinxSerializationConverter = "0.8.0"
 retrofitVersion = "2.9.0"
 roomVersion = "2.6.1"
 stepview = "1.5.1"
+swiperefreshlayout = "1.2.0"
+swiperefreshlayoutVersion = "1.1.0"
 viewpager2 = "1.1.0"
 firebaseFirestore = "25.1.1"
 firebaseStorage = "21.0.1"
@@ -34,6 +36,7 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomVersion" }
 androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "roomVersion" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomVersion" }
+androidx-swiperefreshlayout-v110 = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayoutVersion" }
 androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewpager2" }
 circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
