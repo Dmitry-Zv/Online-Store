@@ -1,6 +1,5 @@
 package com.vc.onlinestore.presentation.shopping
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vc.onlinestore.domain.model.CartProduct

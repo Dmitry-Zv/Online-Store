@@ -106,7 +106,6 @@ dependencies {
     implementation(libs.androidx.room.ktx)
 
     //SwipeRefreshLayout
-    val swipeRefreshLayout = "1.1.0"
     implementation (libs.androidx.swiperefreshlayout.v110)
 
 }

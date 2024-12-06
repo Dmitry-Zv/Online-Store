@@ -44,8 +44,3 @@ data class CartProduct(
 
     }
 }
-
-data class FindQuantityAndCartProduct(
-    val quantity: Int,
-    val cartProduct: CartProduct
-)

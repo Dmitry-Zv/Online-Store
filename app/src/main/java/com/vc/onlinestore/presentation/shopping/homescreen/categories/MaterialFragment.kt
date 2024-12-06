@@ -3,8 +3,6 @@ package com.vc.onlinestore.presentation.shopping.homescreen.categories
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import com.vc.onlinestore.R
 import com.vc.onlinestore.domain.model.Category
 import com.vc.onlinestore.domain.usecases.network.GetBestProductsByCategory
 import com.vc.onlinestore.domain.usecases.network.GetOfferProductsByCategory
