@@ -8,5 +8,5 @@ object Constants {
     const val ONLINE_STORE_SP = "OnlineStoreSP"
     const val INTRODUCTION_KEY = "IntroductionKey"
     const val PRODUCT_DATABASE = "product_database"
-    const val BASE_URL = "http://192.168.31.212:8080/api/v1/"
+    const val BASE_URL = "http://192.168.0.103:8081/api/v1/"
 }
