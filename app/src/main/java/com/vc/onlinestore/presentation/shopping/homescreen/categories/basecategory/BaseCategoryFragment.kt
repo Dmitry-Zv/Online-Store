@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.vc.onlinestore.R
 import com.vc.onlinestore.adapters.BestProductAdapter
 import com.vc.onlinestore.databinding.FragmentBaseCategoryBinding
