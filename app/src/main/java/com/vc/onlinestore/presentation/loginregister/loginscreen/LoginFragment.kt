@@ -15,6 +15,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.material.snackbar.Snackbar
 import com.vc.onlinestore.R
+import com.vc.onlinestore.data.firebase.dto.User
 import com.vc.onlinestore.databinding.FragmentLoginBinding
 import com.vc.onlinestore.dialog.setupBottomSheetDialog
 import com.vc.onlinestore.presentation.shopping.ShoppingActivity
@@ -64,6 +65,7 @@ class LoginFragment : Fragment() {
         collectLoginState()
         collectGoogleSignIn()
         collectResetPassword()
+        collectAuthorize()
         navigate()
     }
 
@@ -105,15 +107,29 @@ class LoginFragment : Fragment() {
 
                 state.user != null -> {
                     binding.buttonLoginLogin.revertAnimation()
-                    Intent(requireContext(), ShoppingActivity::class.java).also { intent ->
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                        startActivity(intent)
-                    }
+                    viewModel.onEvent(event = LoginEvent.Authorize(User.firebaseUserToUser(state.user)))
                 }
 
                 state.errorMessage != null -> {
                     binding.buttonLoginLogin.revertAnimation()
                     Snackbar.make(binding.root, state.errorMessage, Snackbar.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun collectAuthorize() {
+        collectLatestLifecycleFlow(viewModel.tokenState) { state ->
+            when {
+                state.errorMessage != null -> {
+                    Snackbar.make(binding.root, state.errorMessage, Snackbar.LENGTH_SHORT).show()
+                }
+
+                state.token != null -> {
+                    Intent(requireContext(), ShoppingActivity::class.java).also { intent ->
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                    }
                 }
             }
         }
@@ -128,10 +144,7 @@ class LoginFragment : Fragment() {
 
                 state.firebaseUser != null -> {
                     binding.buttonLoginLogin.revertAnimation()
-                    Intent(requireContext(), ShoppingActivity::class.java).also { intent ->
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                        startActivity(intent)
-                    }
+                    viewModel.onEvent(event = LoginEvent.Authorize(User.firebaseUserToUser(state.firebaseUser)))
                 }
 
                 state.errorMessage != null -> {

@@ -8,9 +8,10 @@ import com.vc.onlinestore.domain.usecases.firebase.LogIn
 import com.vc.onlinestore.domain.usecases.firebase.ResetPassword
 import com.vc.onlinestore.domain.usecases.firebase.SaveUserInfo
 import com.vc.onlinestore.domain.usecases.firebase.SignInWithGoogle
+import com.vc.onlinestore.domain.usecases.network.Authorize
+import com.vc.onlinestore.domain.usecases.network.SaveToken
 import com.vc.onlinestore.presentation.common.Event
 import com.vc.onlinestore.presentation.common.ResetPasswordState
-import com.vc.onlinestore.presentation.loginregister.registerscreen.RegisterState
 import com.vc.onlinestore.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -25,7 +26,9 @@ class LoginViewModel @Inject constructor(
     private val login: LogIn,
     private val resetPassword: ResetPassword,
     private val signInWithGoogle: SignInWithGoogle,
-    private val saveUserInfo: SaveUserInfo
+    private val saveUserInfo: SaveUserInfo,
+    private val auth: Authorize,
+    private val saveToken: SaveToken
 ) : ViewModel(), Event<LoginEvent> {
 
     private val _state = MutableSharedFlow<LoginState>()
@@ -34,12 +37,40 @@ class LoginViewModel @Inject constructor(
     val resetPasswordState = _resetPasswordState.asSharedFlow()
     private val _googleSignIn = MutableStateFlow(GoogleSignInState())
     val googleSignIn = _googleSignIn.asStateFlow()
+    private val _tokenState = MutableSharedFlow<AuthorizationState>()
+    val tokenState = _tokenState.asSharedFlow()
 
     override fun onEvent(event: LoginEvent) {
         when (event) {
             is LoginEvent.Login -> performLogin(email = event.email, password = event.password)
             is LoginEvent.ResetPassword -> performResetPasswordState(email = event.email)
             is LoginEvent.SignInWithGoogle -> googleSignIn(token = event.token)
+            is LoginEvent.Authorize -> authorize(user = event.user)
+        }
+    }
+
+    private fun authorize(user: User) {
+        viewModelScope.launch {
+            when (val result = auth(user = user)) {
+                is Resource.Error -> {
+                    _tokenState.emit(
+                        AuthorizationState(
+                            token = null,
+                            errorMessage = result.message
+                        )
+                    )
+                }
+
+                is Resource.Success -> {
+                    saveToken(token = result.data!!)
+                    _tokenState.emit(
+                        AuthorizationState(
+                            token = result.data,
+                            errorMessage = null
+                        )
+                    )
+                }
+            }
         }
     }
 

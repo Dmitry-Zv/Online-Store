@@ -27,4 +27,5 @@ object LocalModule {
     @Singleton
     fun provideProductApi(database: ProductDatabase): CartProductDao =
         database.cartProductDao()
+
 }

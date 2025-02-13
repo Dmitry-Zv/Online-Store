@@ -9,6 +9,6 @@ class GetBestDealsProducts @Inject constructor(
     private val repository: ProductRepository
 ) {
 
-    suspend operator fun invoke(): Resource<List<Product>> =
-        repository.getBestDealsProducts()
+    suspend operator fun invoke(token:String): Resource<List<Product>> =
+        repository.getBestDealsProducts(token)
 }

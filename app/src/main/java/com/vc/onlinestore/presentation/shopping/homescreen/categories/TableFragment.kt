@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import com.vc.onlinestore.domain.model.Category
 import com.vc.onlinestore.domain.usecases.network.GetBestProductsByCategory
 import com.vc.onlinestore.domain.usecases.network.GetOfferProductsByCategory
+import com.vc.onlinestore.domain.usecases.network.GetToken
 import com.vc.onlinestore.presentation.shopping.homescreen.categories.basecategory.BaseCategoryFragment
 import com.vc.onlinestore.presentation.shopping.homescreen.categories.basecategory.BaseCategoryViewModelFactory
 import com.vc.onlinestore.utils.collectLatestLifecycleFlow
@@ -20,11 +21,14 @@ class TableFragment : BaseCategoryFragment() {
     @Inject
     lateinit var getBestProductsByCategory: GetBestProductsByCategory
 
+    @Inject
+    lateinit var getToken: GetToken
     private val viewModel by viewModels<CategoryViewModel> {
         BaseCategoryViewModelFactory(
             getOfferProductsByCategory,
             getBestProductsByCategory,
-            Category.Table
+            Category.Table,
+            getToken
         )
     }
 

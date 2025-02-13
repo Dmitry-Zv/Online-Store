@@ -9,6 +9,6 @@ class GetOfferProductsByCategory @Inject constructor(
     private val repository: ProductRepository
 ) {
 
-    suspend operator fun invoke(category:String) :Resource<List<Product>> =
-        repository.getOfferProductsByCategory(category)
+    suspend operator fun invoke(category:String, token:String) :Resource<List<Product>> =
+        repository.getOfferProductsByCategory(category, token)
 }

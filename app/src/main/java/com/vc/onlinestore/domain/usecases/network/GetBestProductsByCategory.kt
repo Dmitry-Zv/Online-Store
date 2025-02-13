@@ -8,6 +8,6 @@ import javax.inject.Inject
 class GetBestProductsByCategory @Inject constructor(
     private val repository: ProductRepository
 ) {
-    suspend operator fun invoke(category: String): Resource<List<Product>> =
-        repository.getBestProductsByCategory(category)
+    suspend operator fun invoke(category: String, token:String): Resource<List<Product>> =
+        repository.getBestProductsByCategory(category, token)
 }

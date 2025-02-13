@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.vc.onlinestore.domain.model.Category
 import com.vc.onlinestore.domain.usecases.network.GetBestProductsByCategory
 import com.vc.onlinestore.domain.usecases.network.GetOfferProductsByCategory
+import com.vc.onlinestore.domain.usecases.network.GetToken
 import com.vc.onlinestore.presentation.common.Event
 import com.vc.onlinestore.utils.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,8 @@ import kotlinx.coroutines.launch
 class CategoryViewModel(
     private val getOfferProductsByCategory: GetOfferProductsByCategory,
     private val getBestProductsByCategory: GetBestProductsByCategory,
-    private val category: Category
+    private val category: Category,
+    private val getToken: GetToken
 ) : ViewModel(), Event<CategoryEvent> {
 
     private val _offerProductsState = MutableStateFlow(ProductsCategoryState())
@@ -39,7 +41,8 @@ class CategoryViewModel(
     private fun fetchOfferProducts() {
         viewModelScope.launch {
             _offerProductsState.value = ProductsCategoryState(null, true, null)
-            when (val result = getOfferProductsByCategory(category.category)) {
+            val token = getToken()
+            when (val result = getOfferProductsByCategory(category.category, token)) {
                 is Resource.Error -> {
                     _offerProductsState.value = ProductsCategoryState(null, false, result.message!!)
                 }
@@ -54,7 +57,8 @@ class CategoryViewModel(
     private fun fetchBestProducts() {
         viewModelScope.launch {
             _bestProductsState.value = ProductsCategoryState(null, true, null)
-            when (val result = getBestProductsByCategory(category.category)) {
+            val token = getToken()
+            when (val result = getBestProductsByCategory(category.category, token)) {
                 is Resource.Error -> {
                     _bestProductsState.value = ProductsCategoryState(null, false, result.message!!)
                 }

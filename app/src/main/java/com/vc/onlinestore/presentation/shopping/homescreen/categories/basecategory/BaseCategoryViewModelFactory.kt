@@ -5,12 +5,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.vc.onlinestore.domain.model.Category
 import com.vc.onlinestore.domain.usecases.network.GetBestProductsByCategory
 import com.vc.onlinestore.domain.usecases.network.GetOfferProductsByCategory
+import com.vc.onlinestore.domain.usecases.network.GetToken
 import com.vc.onlinestore.presentation.shopping.homescreen.categories.CategoryViewModel
 
 class BaseCategoryViewModelFactory(
     private val getOfferProductsByCategory: GetOfferProductsByCategory,
     private val getBestProductsByCategory: GetBestProductsByCategory,
-    private val category: Category
+    private val category: Category,
+    private val token: GetToken
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -19,7 +21,8 @@ class BaseCategoryViewModelFactory(
             return CategoryViewModel(
                 getOfferProductsByCategory,
                 getBestProductsByCategory,
-                category
+                category,
+                token
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

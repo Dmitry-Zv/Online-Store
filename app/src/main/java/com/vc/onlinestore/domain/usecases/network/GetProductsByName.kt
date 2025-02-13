@@ -5,10 +5,10 @@ import com.vc.onlinestore.domain.repository.ProductRepository
 import com.vc.onlinestore.utils.Resource
 import javax.inject.Inject
 
-class GetSpecialProducts @Inject constructor(
+class GetProductsByName @Inject constructor(
     private val repository: ProductRepository
 ) {
 
-    suspend operator fun invoke(token: String): Resource<List<Product>> =
-        repository.getSpecialProducts(token)
+    suspend operator fun invoke(name: String, token:String): Resource<List<Product>> =
+        repository.getProductsByName(name, token)
 }

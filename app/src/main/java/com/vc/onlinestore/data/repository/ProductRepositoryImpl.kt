@@ -1,5 +1,6 @@
 package com.vc.onlinestore.data.repository
 
+import com.vc.onlinestore.data.firebase.dto.User
 import com.vc.onlinestore.data.network.ProductApi
 import com.vc.onlinestore.domain.model.Product
 import com.vc.onlinestore.domain.repository.ProductRepository
@@ -12,10 +13,10 @@ class ProductRepositoryImpl @Inject constructor(
     private val api: ProductApi
 ) : ProductRepository {
 
-    override suspend fun getSpecialProducts(): Resource<List<Product>> =
+    override suspend fun getSpecialProducts(token: String): Resource<List<Product>> =
         withContext(Dispatchers.IO) {
             try {
-                val response = api.getSpecialProducts()
+                val response = api.getSpecialProducts(token)
                 if (response.isSuccessful) {
                     val products = checkNotNull(response.body())
                     Resource.Success(data = products)
@@ -28,10 +29,10 @@ class ProductRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun getBestDealsProducts(): Resource<List<Product>> =
+    override suspend fun getBestDealsProducts(token: String): Resource<List<Product>> =
         withContext(Dispatchers.IO) {
             try {
-                val response = api.getBestDealsProducts()
+                val response = api.getBestDealsProducts(token)
                 if (response.isSuccessful) {
                     val products = checkNotNull(response.body())
                     Resource.Success(data = products)
@@ -44,10 +45,10 @@ class ProductRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun getBestProducts(): Resource<List<Product>> =
+    override suspend fun getBestProducts(token: String): Resource<List<Product>> =
         withContext(Dispatchers.IO) {
             try {
-                val response = api.getBestProducts()
+                val response = api.getBestProducts(token)
                 if (response.isSuccessful) {
                     val products = checkNotNull(response.body())
                     Resource.Success(data = products)
@@ -60,10 +61,13 @@ class ProductRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun getOfferProductsByCategory(category: String): Resource<List<Product>> =
+    override suspend fun getOfferProductsByCategory(
+        category: String,
+        token: String
+    ): Resource<List<Product>> =
         withContext(Dispatchers.IO) {
             try {
-                val response = api.getOfferProductsByCategory(category = category)
+                val response = api.getOfferProductsByCategory(category = category, token = token)
                 if (response.isSuccessful) {
                     val products = checkNotNull(response.body())
                     Resource.Success(data = products)
@@ -76,13 +80,48 @@ class ProductRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun getBestProductsByCategory(category: String): Resource<List<Product>> =
+    override suspend fun getBestProductsByCategory(
+        category: String,
+        token: String
+    ): Resource<List<Product>> =
         withContext(Dispatchers.IO) {
             try {
-                val response = api.getBestProductsByCategory(category = category)
+                val response = api.getBestProductsByCategory(category = category, token = token)
                 if (response.isSuccessful) {
                     val products = checkNotNull(response.body())
                     Resource.Success(data = products)
+                } else {
+                    val errorBody = checkNotNull(response.errorBody())
+                    Resource.Error(message = errorBody.string())
+                }
+            } catch (e: Exception) {
+                Resource.Error(message = e.message ?: "Unknown error")
+            }
+        }
+
+    override suspend fun getProductsByName(name: String, token: String): Resource<List<Product>> =
+        withContext(Dispatchers.IO) {
+            try {
+                val response = api.getProductsByName(name = name, token = token)
+                if (response.isSuccessful) {
+                    val products = checkNotNull(response.body())
+                    Resource.Success(data = products)
+                } else {
+                    val errorBody = checkNotNull(response.errorBody())
+                    Resource.Error(message = errorBody.string())
+                }
+            } catch (e: Exception) {
+                Resource.Error(message = e.message ?: "Unknown error")
+            }
+        }
+
+    override suspend fun authorize(user: User): Resource<String> =
+        withContext(Dispatchers.IO) {
+            try {
+                val response = api.authorize(user = user)
+                if (response.isSuccessful) {
+                    val token = checkNotNull(response.headers()["Authorization"])
+                    Resource.Success(data = token)
                 } else {
                     val errorBody = checkNotNull(response.errorBody())
                     Resource.Error(message = errorBody.string())

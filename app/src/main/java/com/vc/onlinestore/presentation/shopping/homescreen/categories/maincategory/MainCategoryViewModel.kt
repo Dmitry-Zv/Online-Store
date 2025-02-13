@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.vc.onlinestore.domain.usecases.network.GetBestDealsProducts
 import com.vc.onlinestore.domain.usecases.network.GetBestProducts
 import com.vc.onlinestore.domain.usecases.network.GetSpecialProducts
+import com.vc.onlinestore.domain.usecases.network.GetToken
 import com.vc.onlinestore.presentation.common.Event
 import com.vc.onlinestore.presentation.shopping.homescreen.categories.ProductsCategoryState
 import com.vc.onlinestore.utils.Resource
@@ -18,7 +19,8 @@ import javax.inject.Inject
 class MainCategoryViewModel @Inject constructor(
     private val getSpecialProducts: GetSpecialProducts,
     private val getBestDealsProducts: GetBestDealsProducts,
-    private val getBestProducts: GetBestProducts
+    private val getBestProducts: GetBestProducts,
+    private val getToken: GetToken
 ) : ViewModel(), Event<MainCategoryEvent> {
 
     private val _specialProductsState = MutableStateFlow(ProductsCategoryState())
@@ -45,7 +47,8 @@ class MainCategoryViewModel @Inject constructor(
     private fun fetchSpecialProducts() {
         viewModelScope.launch {
             _specialProductsState.value = ProductsCategoryState(null, true, null)
-            when (val result = getSpecialProducts()) {
+            val token = getToken()
+            when (val result = getSpecialProducts(token)) {
                 is Resource.Error -> {
                     _specialProductsState.value =
                         ProductsCategoryState(null, false, result.message!!)
@@ -62,7 +65,8 @@ class MainCategoryViewModel @Inject constructor(
     private fun fetchBestDealsProducts() {
         viewModelScope.launch {
             _bestDealsProductsState.value = ProductsCategoryState(null, true, null)
-            when (val result = getBestDealsProducts()) {
+            val token = getToken()
+            when (val result = getBestDealsProducts(token)) {
                 is Resource.Error -> {
                     _bestDealsProductsState.value =
                         ProductsCategoryState(null, false, result.message!!)
@@ -79,7 +83,8 @@ class MainCategoryViewModel @Inject constructor(
     private fun fetchBestProducts() {
         viewModelScope.launch {
             _bestProductsState.value = ProductsCategoryState(null, true, null)
-            when (val result = getBestProducts()) {
+            val token = getToken()
+            when (val result = getBestProducts(token)) {
                 is Resource.Error -> {
                     _bestProductsState.value = ProductsCategoryState(null, false, result.message!!)
                 }
